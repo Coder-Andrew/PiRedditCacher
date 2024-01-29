@@ -25,7 +25,7 @@ If you're running this on a Raspberry Pi and wish to use the GPIO functionalitie
 ```bash
 pip install gpiozero
 ```
-Note: The GPIO functionalities are optional and only required if running the application on a Raspberry Pi with hardware interface. It's only use is to blink a light when an error has occurred
+Note: The GPIO functionalities are optional and only required if running the application on a Raspberry Pi with hardware interface. Its only use is to blink a light when an error has occurred
 
 ### Usage
 1. Clone the repo to your local machine:
