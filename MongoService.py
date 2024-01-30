@@ -50,6 +50,7 @@ class MongoService(IMongoService):
             self.db = self.client[dbname]
 
             self.collection = self.db[collectionName]
+            self.name = name
 
         except Exception as e:
             raise ValueError(f"Error while connecting to Mongo: {e}")

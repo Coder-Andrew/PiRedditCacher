@@ -1,8 +1,7 @@
 from MongoService import IMongoService, MongoService
 from filehandler import JsonFileStore
 from RedditService import RedditService
-
-from RedditModel import RedditModel
+from datetime import datetime
 
 class PiCacher:
     def __init__(self, mongoService: IMongoService, jsonFileStore: JsonFileStore, redditService: RedditService):
@@ -12,13 +11,21 @@ class PiCacher:
 
     def cache_posts(self, timeframe = 'week', url = "https://www.reddit.com/r/Python/top/.json?t="):
         # Combine cached posts with new posts
-        posts = self.redditService.get_reddit_posts(time = timeframe, url=url) + self.jsonFileStore.read()
+        posts = self.redditService.get_reddit_posts(time = timeframe, url=url)
 
         if self.mongoService.test_connection():
-            self.mongoService.create_many(posts)
-            self.jsonFileStore.return_clear()
+            stored_posts = self.jsonFileStore.read()
+
+            print(f'Successful connection to {self.mongoService.name} sent {len(posts)} posts + {len(stored_posts)} cached posts at: {datetime.now()}')
+            
+            posts += stored_posts                   # Get posts from json cache
+            self.mongoService.create_many(posts)    # Save posts to db
+            self.jsonFileStore.return_clear()       # Clear cache
+        
         else:
-            self.jsonFileStore.write(posts)
+            print(f'---Unsuccessful connection to {self.mongoService.name} at: {datetime.now()}\n\tCaching: {len(posts)}, cached: {len(self.jsonFileStore)}')
+            
+            self.jsonFileStore.write(posts)         # Add posts to cache
 
 
 if __name__ == '__main__':

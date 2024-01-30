@@ -5,20 +5,21 @@ from os.path import exists
 class JsonFileStore:
     def __init__(self, filename = 'cache.json'):
         self.filename = filename
+        self.objects = []
         self.read()
 
     def read(self):
-        if not exists(self.filename):
-            with open(self.filename, 'w'):
-                pass 
-            
-        with open(self.filename, 'r') as f:
-            file_contents = f.read()
-            if file_contents:
-                self.objects = [RedditModel(**item) for item in json.loads(file_contents)]
-            else:
-                self.objects = []
-            return self.objects
+        if exists(self.filename):           
+            with open(self.filename, 'r') as f:
+                file_contents = f.read()
+                if file_contents:
+                    self.objects = [RedditModel(**item) for item in json.loads(file_contents)]
+                else:
+                    self.objects = []
+                return self.objects
+        else:
+            with open(self.filename, "w"):
+                pass
             
     def write(self, json_obj: RedditModel):
         if isinstance(json_obj, list):
@@ -34,9 +35,12 @@ class JsonFileStore:
         self.objects = []
         
         with open(self.filename, 'w') as f:
-            f.write(json.dumps(self.objects, indent=4))
+            f.write(json.dumps([], indent=4))
         
         return data
+    
+    def __len__(self):
+        return len(self.objects)
 
 
 if __name__ == '__main__':

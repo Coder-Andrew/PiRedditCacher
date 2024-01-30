@@ -6,7 +6,8 @@ from PiBlinkHandler import blink_led
 def job(piCacher: PiCacher, timeFrame: str):
     try:
         piCacher.cache_posts(timeFrame)
-    except:
+    except Exception as e:
+        print(f"Error with {piCacher.mongoService.name}: {e}")
         blink_led()
         while True:
             time.sleep(1)
@@ -16,9 +17,11 @@ if __name__ == '__main__':
     port = 27017
     db = 'testdb'
 
-    mongoService = MongoService(ip, port, db, 'HourlyRedditStore')
-    day_mongoService = MongoService(ip, port, db, 'DailyRedditStore')
-    week_mongoService = MongoService(ip, port, db, 'WeeklyRedditStore')
+    coll_mod = 'TEST'
+
+    mongoService = MongoService(ip, port, db, f'HourlyRedditStore{coll_mod}', 'HourConnection')
+    day_mongoService = MongoService(ip, port, db, f'DailyRedditStore{coll_mod}', 'DayConnection')
+    week_mongoService = MongoService(ip, port, db, f'WeeklyRedditStore{coll_mod}', 'WeekConnection')
 
     redditService = RedditService()
     

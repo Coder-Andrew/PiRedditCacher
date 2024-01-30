@@ -7,7 +7,7 @@ class RedditModel:
     def __init__(self,
                  title: str, 
                  url: str,
-                 flairs: List[str], 
+                 flairs: str, 
                  upvotes: int, 
                  num_comments: int, 
                  created: float, 
@@ -22,7 +22,9 @@ class RedditModel:
         self.text = text
 
         if current_time == None:
-            self.current_time = str(timedelta(hours=-8) + datetime.utcfromtimestamp(float(time.time())))
+            current_time = str(timedelta(hours=-8) + datetime.utcfromtimestamp(float(time.time())))
+        
+        self.current_time = current_time
 
 
 
