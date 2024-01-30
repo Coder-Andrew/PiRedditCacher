@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     hour_pc = PiCacher(mongoService, hourJsonCache, redditService)
     day_pc = PiCacher(day_mongoService, dayJsonCache, redditService)
-    week_pc = PiCacher(week_mongoService, hourJsonCache, redditService)
+    week_pc = PiCacher(week_mongoService, weekJsonCache, redditService)
 
     job(hour_pc, 'hour')
     job(day_pc, 'day')
