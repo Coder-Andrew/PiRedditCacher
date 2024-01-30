@@ -10,6 +10,8 @@ This was a weekend project of mine designed to cache results if connection to a 
 ### Prerequisites
 Ensure you have Python 3.x installed on your system. You can download it from [Python's official website](https://www.python.org/).
 
+Ensure you have mongodb installed on your host system
+
 ### Dependencies
 Install the necessary Python packages using pip:
 

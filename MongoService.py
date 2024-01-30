@@ -100,7 +100,8 @@ class MongoService(IMongoService):
 
     def create_many(self, newModels: List[RedditModel]):
         try:
-            self.collection.insert_many([model.__dict__ for model in newModels])
+            if newModels:
+                self.collection.insert_many([model.__dict__ for model in newModels])
 
         except Exception as e:
             raise ValueError(f'Error saving multiple models\nStart: {newModels[0].__dict__}\nEnd:{newModels[-1].__dict__}')
