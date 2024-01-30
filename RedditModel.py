@@ -1,7 +1,5 @@
 from typing import List, Dict
 from datetime import datetime, timedelta
-import time
-
 
 class RedditModel:
     def __init__(self,
@@ -22,7 +20,7 @@ class RedditModel:
         self.text = text
 
         if current_time == None:
-            current_time = str(timedelta(hours=-8) + datetime.utcfromtimestamp(float(time.time())))
+            current_time = str(datetime.now())
         
         self.current_time = current_time
 
@@ -30,5 +28,5 @@ class RedditModel:
 
 if __name__ == '__main__':
 
-    x = RedditModel('test','test.com',['test'],50,20, time.time(), "Hello World")
+    x = RedditModel('test','test.com',['test'],50,20, 46546543216, "Hello World")
     print(x.__dict__)
